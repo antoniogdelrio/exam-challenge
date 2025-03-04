@@ -5,9 +5,8 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 export default function Home() {
   return (
     <div>
-      <main className="flex flex-col items-center mx-3 mt-4">
-        <h1 className="text-4xl font-bold mb-8">Exam Challenge</h1>
-        <Card className="max-w-[500px]">
+      <main className="flex flex-col items-center mt-4">
+        <Card className="w-full">
           <CardHeader>
             Selecione o número de questões e os cadernos.
           </CardHeader>

@@ -16,9 +16,9 @@ const ChallengeForm = () => {
             <SelectValue placeholder="Quantidade de Questões" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="5">5</SelectItem>
-            <SelectItem value="10">10</SelectItem>
-            <SelectItem value="15">15</SelectItem>
+            <SelectItem value="4">4</SelectItem>
+            <SelectItem value="8">8</SelectItem>
+            <SelectItem value="12">12</SelectItem>
           </SelectContent>
         </Select>
       </div>

@@ -8,7 +8,7 @@ export default function Home() {
       <main className="flex flex-col items-center mt-4">
         <Card className="w-full">
           <CardHeader>
-            Selecione o número de questões e os cadernos.
+            Selecione o número de questões e as disciplinas.
           </CardHeader>
           <CardContent>
             <ChallengeForm />

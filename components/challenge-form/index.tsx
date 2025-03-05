@@ -32,16 +32,16 @@ const ChallengeForm = () => {
             <Label htmlFor="matematica">Matemática</Label>
           </div>
           <div className="flex gap-1 items-center w-[100%] mb-4 sm:w-[50%]">
-            <Checkbox id="natureza" />
-            <Label htmlFor="natureza">Ciências da Natureza</Label>
+            <Checkbox id="ciencias-natureza" />
+            <Label htmlFor="ciencias-natureza">Ciências da Natureza</Label>
           </div>
           <div className="flex gap-1 items-center w-[100%] mb-4 sm:w-[50%]">
             <Checkbox id="linguagens" />
             <Label htmlFor="linguagens">Linguagens e Códigos</Label>
           </div>
           <div className="flex gap-1 items-center w-[100%] mb-4 sm:w-[50%]">
-            <Checkbox id="humanas" />
-            <Label htmlFor="humanas">Ciências Humanas</Label>
+            <Checkbox id="ciencias-humanas" />
+            <Label htmlFor="ciencias-humanas">Ciências Humanas</Label>
           </div>
         </div>
       </fieldset>

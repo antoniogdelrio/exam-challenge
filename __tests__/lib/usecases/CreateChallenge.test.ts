@@ -1,4 +1,4 @@
-import CreateChallenge from "../lib/usecases/CreateChallenge"
+import CreateChallenge from "@/lib/usecases/CreateChallenge"
 import { test, expect, beforeAll, vi, afterAll } from 'vitest'
 import jwt from 'jsonwebtoken'
 

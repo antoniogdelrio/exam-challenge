@@ -8,6 +8,10 @@ beforeAll(() => {
   vi.stubEnv('JWT_SECRET', secret)
 })
 
+afterAll(() => {
+  vi.unstubAllEnvs()
+})
+
 const decodeJwt = (jwtCode: string) => {
   const decodedJwt = jwt.verify(jwtCode, secret)
   return (decodedJwt as {
@@ -32,8 +36,4 @@ test('should create a challenge code successfully', async () => {
   expect(decodeJwt(createChallengeOutput.code).selectedThemes).toEqual(['matematica', 'linguagens'])
   expect(decodeJwt(createChallengeOutput.code).iat).toBeDefined()
   expect(decodeJwt(createChallengeOutput.code).exp).toBeDefined()
-})
-
-afterAll(() => {
-  vi.unstubAllEnvs()
 })

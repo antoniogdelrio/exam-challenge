@@ -1,9 +1,13 @@
 import CreateChallenge from "@/lib/usecases/CreateChallenge"
 import VerifyCode from "@/lib/usecases/VerifyCode"
-import { beforeAll, expect, test, vi } from "vitest"
+import { afterAll, beforeAll, expect, test, vi } from "vitest"
 
 beforeAll(() => {
   vi.stubEnv('JWT_SECRET', 'secret')
+})
+
+afterAll(() => {
+  vi.unstubAllEnvs()
 })
 
 test('should validate a challenge code successfully', async () => {

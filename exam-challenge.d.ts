@@ -1,7 +1,13 @@
+interface ChallengeRequest {
+  challengeSize: number,
+  selectedThemes: string[]
+}
+
 interface IAlternative {
   letter: string,
   text: string,
-  file: string | null
+  file: string | null,
+  isCorrect: boolean
 }
 
 interface IQuestion {

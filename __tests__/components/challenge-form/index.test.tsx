@@ -3,10 +3,8 @@ import ChallengeForm from "@/components/challenge-form"
 import "@testing-library/jest-dom"
 import { describe, it, expect } from "vitest"
 
-
-
 describe("ChallengeForm", () => {
-  it.only("renders the select input and all checkboxes with labels", () => {
+  it("renders the select input and all checkboxes with labels", () => {
     render(<ChallengeForm />)
 
     expect(screen.getAllByText("Quantidade de Questões")).toHaveLength(2)
@@ -20,29 +18,34 @@ describe("ChallengeForm", () => {
   it("opens select options when clicked", async () => {
     render(<ChallengeForm />)
 
-    // Find the select trigger which has the placeholder text
-    const selectTrigger = screen.getByRole("button", {
-      name: /Quantidade de Questões/i,
-    })
+    const selectTrigger = screen.getByRole("combobox")
     fireEvent.click(selectTrigger)
 
-    // Check that the select options are rendered
-    expect(await screen.findByText("4")).toBeInTheDocument()
-    expect(await screen.findByText("8")).toBeInTheDocument()
-    expect(await screen.findByText("12")).toBeInTheDocument()
+    expect(screen.getByRole("listbox")).toBeInTheDocument()
+
+    expect(screen.getByRole('option', { name: '4' })).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: '8' })).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: '12' })).toBeInTheDocument()
   })
 
   it("allows checkbox interaction", () => {
     render(<ChallengeForm />)
 
-    const checkboxMatematica = screen.getByLabelText("Matemática") as HTMLInputElement
+    const mathCheckbox = screen.getByLabelText("Matemática")
+    const scienceCheckbox = screen.getByLabelText("Ciências da Natureza")
+    const languageCheckbox = screen.getByLabelText("Linguagens e Códigos")
+    const humanitiesCheckbox = screen.getByLabelText("Ciências Humanas")
 
-    // Click to check the checkbox
-    fireEvent.click(checkboxMatematica)
-    expect(checkboxMatematica.checked).toBeTruthy()
+    fireEvent.click(mathCheckbox)
+    fireEvent.click(scienceCheckbox)
 
-    // Click again to uncheck
-    fireEvent.click(checkboxMatematica)
-    expect(checkboxMatematica.checked).toBeFalsy()
+    expect(mathCheckbox).toBeChecked()
+    expect(scienceCheckbox).toBeChecked()
+    expect(languageCheckbox).not.toBeChecked()
+    expect(humanitiesCheckbox).not.toBeChecked()
+
+    // Test unchecking
+    fireEvent.click(mathCheckbox)
+    expect(mathCheckbox).not.toBeChecked()
   })
 })

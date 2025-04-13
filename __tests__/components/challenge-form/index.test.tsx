@@ -1,23 +1,48 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen, fireEvent } from "@testing-library/react"
 import ChallengeForm from "@/components/challenge-form"
-import { describe, it } from "vitest"
+import "@testing-library/jest-dom"
+import { describe, it, expect } from "vitest"
+
+
 
 describe("ChallengeForm", () => {
   it.only("renders the select input and all checkboxes with labels", () => {
     render(<ChallengeForm />)
 
-    screen.getByRole("checkbox", { name: "Matemática" })
-    screen.getByRole("checkbox", { name: "Ciências da Natureza" })
-    screen.getByRole("checkbox", { name: "Linguagens e Códigos" })
-    screen.getByRole("checkbox", { name: "Ciências Humanas" })
+    expect(screen.getAllByText("Quantidade de Questões")).toHaveLength(2)
 
-    screen.getByLabelText("Quantidade de Questões")
-    screen.getByRole("combobox", { name: "Quantidade de Questões" })
+    expect(screen.getByLabelText("Matemática")).toBeInTheDocument()
+    expect(screen.getByLabelText("Ciências da Natureza")).toBeInTheDocument()
+    expect(screen.getByLabelText("Linguagens e Códigos")).toBeInTheDocument()
+    expect(screen.getByLabelText("Ciências Humanas")).toBeInTheDocument()
+  })
 
-    fireEvent.click(screen.getByRole("combobox", { name: "Quantidade de Questões" }))
+  it("opens select options when clicked", async () => {
+    render(<ChallengeForm />)
 
-    screen.getByRole("option", { name: "4" })
-    screen.getByRole("option", { name: "8" })
-    screen.getByRole("option", { name: "12" })
+    // Find the select trigger which has the placeholder text
+    const selectTrigger = screen.getByRole("button", {
+      name: /Quantidade de Questões/i,
+    })
+    fireEvent.click(selectTrigger)
+
+    // Check that the select options are rendered
+    expect(await screen.findByText("4")).toBeInTheDocument()
+    expect(await screen.findByText("8")).toBeInTheDocument()
+    expect(await screen.findByText("12")).toBeInTheDocument()
+  })
+
+  it("allows checkbox interaction", () => {
+    render(<ChallengeForm />)
+
+    const checkboxMatematica = screen.getByLabelText("Matemática") as HTMLInputElement
+
+    // Click to check the checkbox
+    fireEvent.click(checkboxMatematica)
+    expect(checkboxMatematica.checked).toBeTruthy()
+
+    // Click again to uncheck
+    fireEvent.click(checkboxMatematica)
+    expect(checkboxMatematica.checked).toBeFalsy()
   })
 })

@@ -1,4 +1,4 @@
-import { ExamGateway } from "@/lib/gateways/ExamGateway";
+import { FakeExamGateway } from "@/lib/gateways/ExamGateway";
 import CreateChallenge from "@/lib/usecases/CreateChallenge";
 import GetChallengeByCode from "@/lib/usecases/GetChallengeByCode";
 import { afterAll, beforeAll, expect, test, vi } from "vitest";
@@ -10,25 +10,6 @@ beforeAll(() => {
 afterAll(() => {
   vi.unstubAllEnvs()
 })
-
-class FakeExamGateway implements ExamGateway {
-  async getChallenge({ challengeSize, selectedThemes }: ChallengeRequest) {
-    return Array.from({ length: challengeSize }, (_, index) => ({
-      title: `Question ${index + 1}`,
-      discipline: selectedThemes[index % selectedThemes.length],
-      context: `Context for question ${index + 1}`,
-      index: index + 1,
-      year: new Date().getFullYear(),
-      alternativesIntroduction: `Introduction for question ${index + 1}`,
-      alternatives: Array.from({ length: 5 }, (_, altIndex) => ({
-        letter: String.fromCharCode(65 + altIndex),
-        text: `Alternative ${altIndex + 1}`,
-        isCorrect: altIndex === 0,
-        file: null
-      }))
-    }));
-  }
-}
 
 test('should return a challenge by code', async () => {
   const createChallenge = new CreateChallenge();

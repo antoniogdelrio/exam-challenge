@@ -81,3 +81,22 @@ export class EnemDevExamGateway implements ExamGateway {
     return questions.slice(0, challengeSize);
   }
 }
+
+export class FakeExamGateway implements ExamGateway {
+  async getChallenge({ challengeSize, selectedThemes }: ChallengeRequest) {
+    return Array.from({ length: challengeSize }, (_, index) => ({
+      title: `Question ${index + 1}`,
+      discipline: selectedThemes[index % selectedThemes.length],
+      context: `Context for question ${index + 1}`,
+      index: index + 1,
+      year: new Date().getFullYear(),
+      alternativesIntroduction: `Introduction for question ${index + 1}`,
+      alternatives: Array.from({ length: 5 }, (_, altIndex) => ({
+        letter: String.fromCharCode(65 + altIndex),
+        text: `Alternative ${altIndex + 1}`,
+        isCorrect: altIndex === 0,
+        file: null
+      }))
+    }));
+  }
+}

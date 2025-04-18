@@ -1,7 +1,25 @@
 import InputCopy from "@/components/ui/input-copy";
+import VerifyCode from "@/lib/usecases/VerifyCode";
 import { Check } from "lucide-react";
+import { permanentRedirect } from "next/navigation";
 
-export default function Link() {
+interface PageProps {
+  searchParams: Promise<{ code: string }> | { code: string }
+}
+
+export default async function Link({ searchParams }: PageProps) {
+  const params = await searchParams
+
+  const verifyCode = new VerifyCode()
+  const { isValid } = await verifyCode.execute({ code: params.code })
+
+  if (!isValid) {
+    permanentRedirect('/')
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const challengeLink = `${baseUrl}/exam/${params.code}`
+
   return (
     <div>
       <main className="flex flex-col items-center mx-3">
@@ -13,7 +31,7 @@ export default function Link() {
             toastMessage="Link copiado para a área de transferência"
             inputProps={{
               placeholder: "Copiar link",
-              value: "http://localhost/ewe9fw5f9w5fw9ef5"
+              value: challengeLink
             }}
           />
         </div>

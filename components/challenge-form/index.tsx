@@ -6,12 +6,12 @@ import { Checkbox } from "../ui/checkbox"
 
 const ChallengeForm = () => {
   return (
-    <form>
+    <div>
       <div className="mb-4">
         <Label htmlFor="challengeSize" className="mb-2">
           <p className="text-base font-medium">Quantidade de Questões</p>
         </Label>
-        <Select>
+        <Select name="challengeSize">
           <SelectTrigger className="w-[100%]" id="challengeSize">
             <SelectValue placeholder="Quantidade de Questões" />
           </SelectTrigger>
@@ -28,24 +28,24 @@ const ChallengeForm = () => {
         </legend>
         <div className="flex flex-wrap">
           <div className="flex gap-1 items-center w-[100%] mb-4 sm:w-[50%]">
-            <Checkbox id="matematica" />
+            <Checkbox name="selectedThemes" id="matematica" value="matematica" />
             <Label htmlFor="matematica">Matemática</Label>
           </div>
           <div className="flex gap-1 items-center w-[100%] mb-4 sm:w-[50%]">
-            <Checkbox id="ciencias-natureza" />
+            <Checkbox name="selectedThemes" id="ciencias-natureza" value="ciencias-natureza" />
             <Label htmlFor="ciencias-natureza">Ciências da Natureza</Label>
           </div>
           <div className="flex gap-1 items-center w-[100%] mb-4 sm:w-[50%]">
-            <Checkbox id="linguagens" />
+            <Checkbox name="selectedThemes" id="linguagens" value="linguagens" />
             <Label htmlFor="linguagens">Linguagens e Códigos</Label>
           </div>
           <div className="flex gap-1 items-center w-[100%] mb-4 sm:w-[50%]">
-            <Checkbox id="ciencias-humanas" />
+            <Checkbox name="selectedThemes" id="ciencias-humanas" value="ciencias-humanas" />
             <Label htmlFor="ciencias-humanas">Ciências Humanas</Label>
           </div>
         </div>
       </fieldset>
-    </form>
+    </div>
   )
 }
 

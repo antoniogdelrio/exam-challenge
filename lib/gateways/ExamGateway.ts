@@ -13,7 +13,7 @@ export class EnemDevExamGateway implements ExamGateway {
   private readonly BASE_URL = "https://api.enem.dev/v1";
   private readonly DISCIPLINE_RANGES: Record<string, DisciplineRange> = {
     'linguagens': { start: 1, end: 45 },
-    'humanas': { start: 46, end: 90 },
+    'ciencias-humanas': { start: 46, end: 90 },
     'ciencias-natureza': { start: 91, end: 135 },
     'matematica': { start: 136, end: 180 }
   };

@@ -1,6 +1,5 @@
-import Questionnaire from '@/components/questionnaire'
-import { Button } from '@/components/ui/button'
-import { getChallengeByCode } from '@/lib/actions'
+import SubmitChallenge from '@/components/submit-form'
+import { getChallengeByCode, submitChallenge } from '@/lib/actions'
 
 interface PageProps {
   params: {
@@ -14,13 +13,6 @@ export default async function Exam({ params }: PageProps) {
   const examQuestions = await getChallengeByCode(challengeCode)
 
   return (
-    <>
-      <Questionnaire questions={examQuestions} />
-      <div className='flex justify-end'>
-        <Button className='mb-4'>
-          Finalizar
-        </Button>
-      </div>
-    </>
+    <SubmitChallenge questions={examQuestions} submitChallengeAction={submitChallenge} />
   )
 }

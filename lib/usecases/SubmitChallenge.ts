@@ -1,33 +1,33 @@
 export default class SubmitChallenge {
-  async execute({ challenge, answers }: Input): Promise<Output> {
-    const numberOfCorrectAnswers = challenge.reduce((acc, question, index) => {
-      if (question.alternatives.find(alternative => alternative.isCorrect)?.letter === answers[index]) {
+  async execute({ correctAnswers, submittedAnswers }: Input): Promise<Output> {
+    const numberOfCorrectAnswers = correctAnswers.reduce((acc, correctAnswer, index) => {
+      if (correctAnswer === submittedAnswers[index]) {
         return acc + 1;
       }
       return acc;
     }, 0);
 
-    const numberOfQuestions = challenge.length;
+    const numberOfQuestions = correctAnswers.length;
 
     const isAllAnswersCorrect = numberOfCorrectAnswers === numberOfQuestions;
+
+    const messageTitle = isAllAnswersCorrect ? "Parabéns!" : "Resultado";
 
     const message = isAllAnswersCorrect ? "Parabéns! Você acertou todas as questões." : `Você acertou ${numberOfCorrectAnswers} de ${numberOfQuestions} questões.`;
 
     return {
-      numberOfCorrectAnswers,
-      numberOfQuestions,
+      messageTitle,
       message,
     };
   }
 }
 
 type Input = {
-  challenge: IQuestion[],
-  answers: string[];
+  correctAnswers: string[],
+  submittedAnswers: string[];
 }
 
 type Output = {
-  numberOfCorrectAnswers: number;
-  numberOfQuestions: number;
   message: string;
+  messageTitle: string;
 }

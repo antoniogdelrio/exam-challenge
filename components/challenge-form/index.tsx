@@ -5,7 +5,7 @@ import { Label } from "../ui/label"
 import { Checkbox } from "../ui/checkbox"
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
 import { useActionState } from "react"
-import SubmitButton from "./submit-button"
+import SubmitButton from "../submit-button"
 
 const createChallengeInitialState = {
   message: '',
@@ -71,7 +71,7 @@ const ChallengeForm = ({ createChallengeAction }: IChallengeForm) => {
         <CardFooter className="flex justify-between">
           {state?.message && <p className="text-red-900">{state?.message}</p>}
           <div className="ml-au">
-            <SubmitButton />
+            <SubmitButton label="Criar" loadingLabel="Criando..." />
           </div>
         </CardFooter>
       </Card>

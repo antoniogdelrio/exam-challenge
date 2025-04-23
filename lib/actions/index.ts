@@ -6,6 +6,7 @@ import { z } from 'zod'
 import VerifyCode from "../usecases/VerifyCode"
 import GetChallengeByCode from "../usecases/GetChallengeByCode"
 import { EnemDevExamGateway } from "../gateways/ExamGateway"
+import SubmitChallenge from "../usecases/SubmitChallenge"
 
 export const createChallenge = async (_prevState: unknown, formData: FormData) => {
   const formSchema = z.object({
@@ -63,4 +64,32 @@ export const getChallengeByCode = async (code: string): Promise<IQuestion[]> => 
   }
 
   return examQuestions
+}
+
+export const submitChallenge = async (_prevState: unknown, formData: FormData) => {
+  const correctAnswers: string[] = []
+  const submittedAnswers: string[] = []
+
+  const entries = Array.from(formData.entries())
+
+  entries.forEach(([key, value]) => {
+    if (key.includes('-answer')) {
+      const correctAnswer = value.toString()
+      correctAnswers.push(correctAnswer)
+    }
+    if (key.includes('-question')) {
+      const submittedAnswer = value.toString()
+      submittedAnswers.push(submittedAnswer)
+    }
+  })
+
+  const { messageTitle, message } = await (new SubmitChallenge()).execute({
+    correctAnswers,
+    submittedAnswers
+  })
+
+  return {
+    messageTitle,
+    message
+  }
 }

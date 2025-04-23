@@ -30,18 +30,19 @@ export default function Question({ year, discipline, index, title, context, alte
         </div>
         <p className='mb-4'>{alternativesIntroduction}</p>
         <div>
-          <RadioGroup>
+          <RadioGroup name={`${id}-question`}>
             {alternatives.map((alternative, alternativeIndex) => (
               <div className='flex items-center mb-2 gap-2' key={`${id}-${alternativeIndex}`}>
-                <RadioGroupItem value={`${id}-${alternativeIndex}`} id={`${id}-${alternativeIndex}`} />
+                <RadioGroupItem value={`${alternative.letter}`} id={`${id}-${alternativeIndex}`} />
                 <Label htmlFor={`${id}-${alternativeIndex}`}>
-                  ({alternative.letter})<Markdown>{alternative.text}</Markdown>
+                  ({alternative.letter}) {alternative.file ? <Image src={alternative.file} alt={alternative.text} width={500} height={500} /> : alternative.text}
                 </Label>
               </div>
             ))}
           </RadioGroup>
+          <input type="hidden" name={`${id}-answer`} value={alternatives.find(alt => alt.isCorrect)?.letter} />
         </div>
       </CardContent>
     </Card>
-  </div>)
+  </div >)
 }

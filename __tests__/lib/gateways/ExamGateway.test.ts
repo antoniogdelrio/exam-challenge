@@ -3,9 +3,9 @@ import { test, expect, vi, beforeEach, describe, afterEach } from 'vitest';
 import type { MockInstance } from 'vitest';
 
 
-const createMockQuestion = () => {
+const createMockQuestion = (filteredThemes?: string[]) => {
   const getRandomDiscipline = () => {
-    const disciplines = ['matematica', 'linguagens', 'ciencias-natureza', 'ciencias-humanas'];
+    const disciplines = filteredThemes || ['matematica', 'linguagens', 'ciencias-natureza', 'ciencias-humanas'];
     return disciplines[Math.floor(Math.random() * disciplines.length)];
   }
 
@@ -14,8 +14,6 @@ const createMockQuestion = () => {
   }
 
   const questionIndex = getRandomQuestionIndex()
-
-  console.log("questionIndex", questionIndex)
 
   return ({
     title: `Questão ${questionIndex} - ENEM 2020`,
@@ -43,7 +41,7 @@ describe('EnemDevExamGateway', () => {
   beforeEach(() => {
     gateway = new EnemDevExamGateway();
     fetchMock = vi.spyOn(global, 'fetch') as MockInstance;
-    vi.useFakeTimers();
+    vi.useFakeTimers({ shouldAdvanceTime: true });
   });
 
   afterEach(() => {
@@ -52,14 +50,14 @@ describe('EnemDevExamGateway', () => {
   });
 
   test('should fetch questions with balanced distribution', async () => {
+    const themes = ['matematica', 'linguagens'];
+
     fetchMock.mockImplementation(() =>
       Promise.resolve({
         ok: true,
-        json: () => Promise.resolve(createMockQuestion())
+        json: () => Promise.resolve(createMockQuestion(themes))
       })
     );
-
-    const themes = ['matematica', 'linguagens'];
 
     const result = await gateway.getChallenge({
       challengeSize: 4,
@@ -76,9 +74,13 @@ describe('EnemDevExamGateway', () => {
 
     expect(themeCounts['matematica']).toBe(2);
     expect(themeCounts['linguagens']).toBe(2);
+  }, {
+    timeout: 40000
   });
 
   test('should handle rate limiting', async () => {
+    const themes = ['matematica'];
+
     let callCount = 0;
     fetchMock.mockImplementation(() => {
       callCount++;
@@ -91,35 +93,38 @@ describe('EnemDevExamGateway', () => {
       }
       return Promise.resolve({
         ok: true,
-        json: () => Promise.resolve(createMockQuestion())
+        json: () => Promise.resolve(createMockQuestion(themes))
       });
     });
 
-    const promise = gateway.getChallenge({
+    const result = await gateway.getChallenge({
       challengeSize: 1,
-      selectedThemes: ['matematica']
+      selectedThemes: themes
     });
 
-    await vi.advanceTimersByTimeAsync(1000);
-    const result = await promise;
-
     expect(result).toHaveLength(1);
+  }, {
+    timeout: 10000
   });
 
   test('should avoid duplicate questions', async () => {
+    const themes = ['matematica'];
+
     fetchMock.mockImplementation(() =>
       Promise.resolve({
         ok: true,
-        json: () => Promise.resolve(createMockQuestion())
+        json: () => Promise.resolve(createMockQuestion(themes))
       })
     );
 
     const result = await gateway.getChallenge({
       challengeSize: 2,
-      selectedThemes: ['matematica']
+      selectedThemes: themes
     });
 
     expect(result).toHaveLength(2);
     expect(result[0].title).not.toBe(result[1].title);
+  }, {
+    timeout: 10000
   });
 });

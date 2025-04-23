@@ -1,5 +1,6 @@
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -48,6 +49,7 @@ export default function ResultDialog({ messageTitle, message, shareableMessage, 
             <Share className="w-full h-4" /> Compartilhe
           </Button>
         </div>
+        <DialogClose aria-label="Fechar" />
       </DialogContent>
     </Dialog>
   )

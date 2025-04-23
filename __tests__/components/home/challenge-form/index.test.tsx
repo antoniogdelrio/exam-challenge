@@ -1,11 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react"
-import ChallengeForm from "@/components/challenge-form"
+import ChallengeForm from "@/components/home/challenge-form"
 import "@testing-library/jest-dom"
-import { describe, it, expect } from "vitest"
+import { describe, it, expect, vi } from "vitest"
+import userEvent from "@testing-library/user-event"
 
 describe("ChallengeForm", () => {
   it("renders the select input and all checkboxes with labels", () => {
-    render(<ChallengeForm />)
+    render(<ChallengeForm createChallengeAction={vi.fn()} />)
 
     expect(screen.getAllByText("Quantidade de Questões")).toHaveLength(2)
 
@@ -16,7 +17,7 @@ describe("ChallengeForm", () => {
   })
 
   it("opens select options when clicked", async () => {
-    render(<ChallengeForm />)
+    render(<ChallengeForm createChallengeAction={vi.fn()} />)
 
     const selectTrigger = screen.getByRole("combobox")
     fireEvent.click(selectTrigger)
@@ -29,7 +30,7 @@ describe("ChallengeForm", () => {
   })
 
   it("allows checkbox interaction", () => {
-    render(<ChallengeForm />)
+    render(<ChallengeForm createChallengeAction={vi.fn()} />)
 
     const mathCheckbox = screen.getByLabelText("Matemática")
     const scienceCheckbox = screen.getByLabelText("Ciências da Natureza")
@@ -44,8 +45,32 @@ describe("ChallengeForm", () => {
     expect(languageCheckbox).not.toBeChecked()
     expect(humanitiesCheckbox).not.toBeChecked()
 
-    // Test unchecking
     fireEvent.click(mathCheckbox)
     expect(mathCheckbox).not.toBeChecked()
+  })
+
+  it("should call the createChallengeAction function on form submission", async () => {
+    const mockCreateChallengeAction = vi.fn()
+    render(<ChallengeForm createChallengeAction={mockCreateChallengeAction} />)
+
+    const selectTrigger = screen.getByRole("combobox")
+    fireEvent.click(selectTrigger)
+
+    const option4 = screen.getByRole('option', { name: '4' })
+    fireEvent.click(option4)
+
+    const mathCheckbox = screen.getByLabelText("Matemática")
+
+    fireEvent.click(mathCheckbox)
+
+    const submitButton = screen.getByRole("button", { name: 'Criar' })
+
+    await userEvent.click(submitButton)
+
+    expect(mockCreateChallengeAction).toHaveBeenCalled()
+    expect(mockCreateChallengeAction.mock.calls[0][1]).toBeInstanceOf(FormData)
+
+    expect((mockCreateChallengeAction.mock.calls[0][1] as FormData).get("challengeSize")).toEqual("4")
+    expect((mockCreateChallengeAction.mock.calls[0][1] as FormData).get("selectedThemes")).toEqual("matematica")
   })
 })

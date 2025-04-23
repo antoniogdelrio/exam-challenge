@@ -70,7 +70,7 @@ const ChallengeForm = ({ createChallengeAction }: IChallengeForm) => {
         </CardContent>
         <CardFooter className="flex justify-between">
           {state?.message && <p className="text-red-900">{state?.message}</p>}
-          <div className="ml-au">
+          <div className="ml-auto">
             <SubmitButton label="Criar" loadingLabel="Criando..." />
           </div>
         </CardFooter>

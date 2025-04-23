@@ -18,6 +18,7 @@ export default class SubmitChallenge {
     return {
       messageTitle,
       message,
+      shareableMessage: `Eu acertei ${numberOfCorrectAnswers} de ${numberOfQuestions} questões no desafio da Exam Challenge!`,
     };
   }
 }
@@ -30,4 +31,5 @@ type Input = {
 type Output = {
   message: string;
   messageTitle: string;
+  shareableMessage: string;
 }

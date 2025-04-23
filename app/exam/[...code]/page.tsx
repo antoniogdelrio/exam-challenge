@@ -1,4 +1,4 @@
-import SubmitChallenge from '@/components/submit-form'
+import SubmitChallengeForm from '@/components/exam/submit-form'
 import { getChallengeByCode, submitChallenge } from '@/lib/actions'
 
 interface PageProps {
@@ -13,6 +13,6 @@ export default async function Exam({ params }: PageProps) {
   const examQuestions = await getChallengeByCode(challengeCode)
 
   return (
-    <SubmitChallenge questions={examQuestions} submitChallengeAction={submitChallenge} />
+    <SubmitChallengeForm questions={examQuestions} submitChallengeAction={submitChallenge} />
   )
 }

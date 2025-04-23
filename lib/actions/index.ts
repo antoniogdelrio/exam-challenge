@@ -83,13 +83,32 @@ export const submitChallenge = async (_prevState: unknown, formData: FormData) =
     }
   })
 
-  const { messageTitle, message } = await (new SubmitChallenge()).execute({
+  const formSchema = z.object({
+    submittedAnswers: z.array(z.string()).min(correctAnswers.length).max(correctAnswers.length)
+  })
+
+  const validationResult = formSchema.safeParse({
+    submittedAnswers
+  })
+
+  if (!validationResult.success) {
+    return {
+      error: "Preencha todas as questões.",
+      messageTitle: '',
+      message: '',
+      shareableMessage: '',
+    }
+  }
+
+  const { messageTitle, message, shareableMessage } = await (new SubmitChallenge()).execute({
     correctAnswers,
     submittedAnswers
   })
 
   return {
     messageTitle,
-    message
+    message,
+    shareableMessage,
+    error: ''
   }
 }

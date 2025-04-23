@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Markdown from "react-markdown"
-import { Label } from "../ui/label"
-import { Card, CardContent } from "../ui/card"
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
+import { Label } from "../../ui/label"
+import { Card, CardContent } from "../../ui/card"
+import { RadioGroup, RadioGroupItem } from "../../ui/radio-group"
 
 export default function Question({ year, discipline, index, title, context, alternativesIntroduction, alternatives }: IQuestion) {
   const id = `${year}-${discipline}-${index}`

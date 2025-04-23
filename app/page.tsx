@@ -1,4 +1,4 @@
-import ChallengeForm from "@/components/challenge-form";
+import ChallengeForm from "@/components/home/challenge-form";
 import { createChallenge } from "@/lib/actions";
 
 export default function Home() {

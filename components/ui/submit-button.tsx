@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormStatus } from "react-dom";
-import { Button } from "../ui/button";
+import { Button } from "./button";
 
 interface ISubmitButton {
   label: string;

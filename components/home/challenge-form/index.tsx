@@ -1,11 +1,11 @@
 'use client'
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "../ui/label"
-import { Checkbox } from "../ui/checkbox"
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card"
+import { Label } from "../../ui/label"
+import { Checkbox } from "../../ui/checkbox"
+import { Card, CardContent, CardFooter, CardHeader } from "../../ui/card"
 import { useActionState } from "react"
-import SubmitButton from "../submit-button"
+import SubmitButton from "../../ui/submit-button"
 
 const createChallengeInitialState = {
   message: '',

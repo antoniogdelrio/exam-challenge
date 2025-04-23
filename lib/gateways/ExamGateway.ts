@@ -20,11 +20,12 @@ export class EnemDevExamGateway implements ExamGateway {
   private readonly START_YEAR = 2017;
 
   private async fetchQuestion(year: number, index: number): Promise<IQuestion> {
+    await delay(1000);
+
     const response = await fetch(`${this.BASE_URL}/exams/${year}/questions/${index}`);
 
     if (!response.ok) {
       if (response.status === 429) {
-        await delay(1000);
         return this.fetchQuestion(year, index);
       }
       throw new Error(`Failed to fetch question: ${response.statusText}`);
@@ -55,7 +56,7 @@ export class EnemDevExamGateway implements ExamGateway {
     for (const theme of selectedThemes) {
       const themeQuestions = [];
 
-      for (let i = 0; i < questionsPerTheme && questions.length < challengeSize; i++) {
+      for (let i = 0; i < questionsPerTheme && questions.length < challengeSize;) {
         const year = this.getRandomYear();
         const index = this.getRandomQuestionIndex(theme);
 
@@ -68,9 +69,9 @@ export class EnemDevExamGateway implements ExamGateway {
             throw new Error('Question discipline does not match theme');
           }
           themeQuestions.push(question);
+          i++;
         } catch (error) {
           console.error(error);
-          i--;
           continue;
         }
       }

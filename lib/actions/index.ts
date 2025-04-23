@@ -53,6 +53,10 @@ export const verifyCode = async (code: string): Promise<string> => {
 }
 
 export const getChallengeByCode = async (code: string): Promise<IQuestion[]> => {
+  if (!code) {
+    permanentRedirect('/')
+  }
+
   let examQuestions
   try {
     const getChallengeByCode = new GetChallengeByCode(new EnemDevExamGateway())

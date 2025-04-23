@@ -1,14 +1,12 @@
 import SubmitChallengeForm from '@/components/exam/submit-form'
 import { getChallengeByCode, submitChallenge } from '@/lib/actions'
 
-interface PageProps {
-  params: {
-    code: string[]
-  }
-}
+type Params = Promise<{ code: string }>
 
-export default async function Exam({ params }: PageProps) {
-  const [challengeCode] = params.code
+export default async function Exam(props: { params: Params }) {
+  const pathParams = await props.params
+
+  const [challengeCode] = pathParams.code
 
   const examQuestions = await getChallengeByCode(challengeCode)
 

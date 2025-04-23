@@ -2,12 +2,12 @@ import InputCopy from "@/components/ui/input-copy";
 import { verifyCode } from "@/lib/actions";
 import { Check } from "lucide-react";
 
-interface PageProps {
-  searchParams: Promise<{ code: string }> | { code: string }
-}
+type SearchParams = Promise<{ [key: string]: string }>
 
-export default async function Link({ searchParams }: PageProps) {
-  const params = await searchParams
+export default async function Link(props: {
+  searchParams: SearchParams
+}) {
+  const params = await props.searchParams
 
   const challengeLink = await verifyCode(params.code)
   return (

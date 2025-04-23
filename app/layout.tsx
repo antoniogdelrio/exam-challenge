@@ -29,7 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="mx-4 sm:mx-auto sm:w-full sm:max-w-[500px]">
+        <div className="mx-4 mb-4 sm:mx-auto sm:w-full sm:max-w-[500px]">
           <h1 className="text-4xl font-bold mb-8 text-center mt-4">Exam Challenge</h1>
           <TooltipProvider>
             {children}

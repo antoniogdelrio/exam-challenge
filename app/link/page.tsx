@@ -1,7 +1,6 @@
 import InputCopy from "@/components/ui/input-copy";
-import VerifyCode from "@/lib/usecases/VerifyCode";
+import { verifyCode } from "@/lib/actions";
 import { Check } from "lucide-react";
-import { permanentRedirect } from "next/navigation";
 
 interface PageProps {
   searchParams: Promise<{ code: string }> | { code: string }
@@ -10,16 +9,7 @@ interface PageProps {
 export default async function Link({ searchParams }: PageProps) {
   const params = await searchParams
 
-  const verifyCode = new VerifyCode()
-  const { isValid } = await verifyCode.execute({ code: params.code })
-
-  if (!isValid) {
-    permanentRedirect('/')
-  }
-
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
-  const challengeLink = `${baseUrl}/exam/${params.code}`
-
+  const challengeLink = await verifyCode(params.code)
   return (
     <div>
       <main className="flex flex-col items-center mx-3">

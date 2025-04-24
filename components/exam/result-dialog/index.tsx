@@ -44,8 +44,8 @@ export default function ResultDialog({ messageTitle, message, shareableMessage, 
           </DialogDescription>
         </DialogHeader>
         <div className="flex gap-4 mt-4">
-          <Button onClick={handleShare} variant="outline" className="flex gap-2">
-            <Share className="w-full h-4" /> Compartilhe
+          <Button onClick={handleShare} variant="outline" className="w-full flex gap-2">
+            <Share className="h-4" /> Compartilhe
           </Button>
         </div>
       </DialogContent>

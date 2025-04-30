@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Markdown from "react-markdown"
 import { Label } from "../../ui/label"
 import { Card, CardContent } from "../../ui/card"
@@ -16,10 +15,8 @@ export default function Question({ year, discipline, index, title, context, alte
             components={{
               img(props) {
                 const { alt, src } = props
-                return <Image
+                return <img
                   src={src as string}
-                  width={500}
-                  height={500}
                   alt={alt as string}
                 />
               }
@@ -35,7 +32,7 @@ export default function Question({ year, discipline, index, title, context, alte
               <div className='flex items-center mb-2 gap-2' key={`${id}-${alternativeIndex}`}>
                 <RadioGroupItem value={`${alternative.letter}`} id={`${id}-${alternativeIndex}`} />
                 <Label htmlFor={`${id}-${alternativeIndex}`}>
-                  ({alternative.letter}) {alternative.file ? <Image src={alternative.file} alt={alternative.text} width={500} height={500} /> : alternative.text}
+                  ({alternative.letter}) {alternative.file ? <img src={alternative.file} alt={alternative.text} /> : alternative.text}
                 </Label>
               </div>
             ))}

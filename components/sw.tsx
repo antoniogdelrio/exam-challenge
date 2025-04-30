@@ -7,7 +7,7 @@ export default function SW() {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/sw.js')
-        .then((registration) => console.log('scope is: ', registration.scope));
+        .then(() => console.log('SW Registered'));
     }
   }, []);
 

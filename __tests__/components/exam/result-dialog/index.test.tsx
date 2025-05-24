@@ -51,7 +51,7 @@ describe("ResultDialog Component", () => {
     expect(mockShare).toHaveBeenCalledWith({
       title: "Hey! Respondi um desafio da Exam Challenge.",
       text: mockProps.shareableMessage,
-      url: "https://exam-challenge-url.vercel.app/"
+      url: "https://exam-challenge.vercel.app/"
     })
   })
 

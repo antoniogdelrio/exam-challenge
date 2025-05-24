@@ -20,7 +20,7 @@ export default function ResultDialog({ messageTitle, message, shareableMessage, 
   const shareData = {
     title: "Hey! Respondi um desafio da Exam Challenge.",
     text: shareableMessage,
-    url: "https://exam-challenge-url.vercel.app/",
+    url: "https://exam-challenge.vercel.app/",
   };
 
 
